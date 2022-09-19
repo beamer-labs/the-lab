@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="IE=Edge">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://www.googletagmanager.com 'unsafe-eval' 'unsafe-inline';" >
+        <title>Beamer Labs - Simple A.I.</title>
+
+        <link rel="stylesheet" href="css/base.css"/>
+        <link rel="stylesheet" href="css/gui-dark.css"/>
+        <link rel="stylesheet" href="js-v-1.0.0/lib/blackbird.css"/>
+
+        <script src="config/config.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/lib/jquery.min.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/lib/blackbird.js"  type="text/javascript"></script>
+
+        <script src="js-v-1.0.0/beamer-lib/input-handler.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/user.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/data.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/assets.class.js" type="text/javascript"></script>
+
+        <script src="js-v-1.0.0/beamer-lib/2d-map.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/2d-tile.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/2d-char.class.js" type="text/javascript"></script>
+
+        <script src="js-v-1.0.0/beamer-lib/utils.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/game-tile.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/game-object.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/mini-map.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/help.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/menu.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/gui.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/events.class.js" type="text/javascript"></script>
+        <script src="js-v-1.0.0/beamer-lib/view-login.class.js" type="text/javascript"></script>
+
+
+		<script src="js-v-1.0.0/games/ai/main.class.js" type="text/javascript"></script>
+		<script src="js-v-1.0.0/games/ai/game-assets.class.js" type="text/javascript"></script>
+		<script src="js-v-1.0.0/games/ai/view-entrance.class.js" type="text/javascript"></script>
+		<script src="js-v-1.0.0/games/ai/neat.js" type="text/javascript"></script>
+
+		<script src="js-v-1.0.0/games/ai/world.class.js" type="text/javascript"></script>
+		<script src="js-v-1.0.0/games/ai/map.class.js" type="text/javascript"></script>
+		<script src="js-v-1.0.0/games/ai/bot.class.js" type="text/javascript"></script>
+    </head>
+    <body class="color-1">
+
+
+        <div class="view view-wrapper" id="view-loading">
+
+            <div class="div-loading-header-1 shine">
+                Simple A.I.
+            </div>
+
+            <div class="div-loading-header-2 shine">
+                - BeamerLabs -
+            </div>
+            <div id="div-loading-msg"></div>
+
+        </div>
+
+
+
+        <div class="view view-wrapper" id="view-splash">
+
+
+            <div class="div-loading-header-1">
+                Simple A.I.
+            </div>
+
+            <div class="div-loading-header-2">
+
+            </div>
+
+
+            <div id="div-splash-msg">...</div>
+
+        </div>
+
+
+        <div class="view view-wrapper" id="view-game-canvas">
+
+            <canvas class="game-canvas" id="main-game-canvas"></canvas>
+
+        </div>
+
+
+
+
+
+        <script type="text/javascript">
+
+            var user = new User();
+            var config = new Config();
+            var help = new Help();
+            var assets = new Assets();
+            var dataHandler = new Data();
+            var beamerUtils = new BeamerUtils();
+            var beamerGui = new BeamerGui();
+            var gameAssets = new GameAssets();
+            var play = new Game();
+            var inputHandler = new InputHandler();
+            var eventHandler = new BeamerEventManager();
+			var Neat = neataptic.Neat;
+			var neatConfig = neataptic.Config;
+
+            window.onload = function()
+            {
+
+
+                var userConfig = {
+                    "auth-url":"/server/api/auth/"
+                };
+
+                user = new User(userConfig);
+
+                user.init();
+
+                //var guiData = {};
+
+                //gui = new Gui(guiData, userConfig);
+
+                //gui.init();
+
+
+            };
+
+
+            function startApp()
+            {
+                debug("User Authenticated - Starting App");
+
+                if(user.userID > 0)
+                {
+                    user.tookAction();
+
+                }
+
+                play.init();
+
+            }
+
+
+
+            function resizeAll()
+            {
+            }
+
+            function debug(msg)
+            {
+                console.log(msg);
+                log.info(msg);
+            }
+
+
+        </script>
+
+
+
+        <div id="div-welcome" class="hidden floater"
+             style="border:1px solid white;
+                    background: #777777;
+                    width: 350px;
+                    height: 150px;
+                    font-family: 'Electrolize',sans-serif;
+                    --clip_win_new: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 35% 100%, calc(35% - 8px) calc(100% - 8px), 0 calc(100% - 8px));
+                    ">
+            HERE I AM
+        </div>
+    </body>
+</html>
